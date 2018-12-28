@@ -18,7 +18,7 @@ class CreateAttachmentsTable extends Migration
             $table->integer('target_id')->index();
             $table->smallInteger('type');
             $table->string('file', 64);
-            $tabel->string('caption', 200);
+            $table->string('caption', 200);
             $table->timestamps();
         });
     }
