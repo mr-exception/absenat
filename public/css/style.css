@@ -8,6 +8,7 @@
 .row {
     direction: rtl;
     text-align: right;
+    margin-top: 10px;
 }
 .card-header {
     direction: rtl;
