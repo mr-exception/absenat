@@ -1,0 +1,21 @@
+@font-face {
+    font-family: "Shabnam";
+    src: url(../font/Shabnam.ttf); 
+}
+*{
+    font-family: "Shabnam";
+}
+.row {
+    direction: rtl;
+    text-align: right;
+}
+.card-header {
+    direction: rtl;
+    text-align: right;
+}
+.form-check {
+    text-align: right;
+}
+.form-check-label {
+    margin-right: 25px;
+}
