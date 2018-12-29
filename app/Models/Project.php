@@ -21,4 +21,20 @@ class Project extends Model{
     public function members_pivot(){
         return $this->hasMany('App\Models\Member', 'project_id');
     }
+    public function epics(){
+        return $this->hasMany('App\Models\Epic', 'project_id');
+    }
+
+    const V_PRIVATE = 1;
+    const V_PUBLIC  = 2;
+    public function getVisibilityStrAttribute(){
+        return __('general.visibility_str.' . $this->visibility);
+    }
+
+    const OPEN = 1;
+    const CLOSED = 2;
+    const FAILED = 3;
+    public function getStatusStrAttribute(){
+        return __('general.status_str.' . $this->status);
+    }
 }

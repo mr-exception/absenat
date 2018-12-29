@@ -28,6 +28,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function projects(){
+        return $this->belongsToMany('App\Models\Project', 'members', 'user_id', 'project_id');
+    }
+
     const ACTIVE = 1;
     const INACTIVE = 2;
 

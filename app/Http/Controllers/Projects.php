@@ -39,4 +39,28 @@ class Projects extends Controller{
             'project'   => $project
         ]);
     }
+
+    public function edit(Request $request, Project $project){
+        return view('projects.edit', [
+            'project'   => $project
+        ]);
+    }
+    public function update(EditProjectRequest $request, Project $project){
+        $project->fill($request->only([
+            'title',
+            'description',
+            'visibility',
+            'status',
+        ]))->save();
+        return redirect()->route('projects.edit', ['project'    => $project])->with(['edit_was_successfull' => true]);
+    }
+
+    public function destroy(Request $request, Project $project){
+        $project->delete();
+        return redirect()->route('home');
+    }
+
+    public function close(Request $request, Project $project){
+        $project->status = Project::CLOSED;
+    }
 }
