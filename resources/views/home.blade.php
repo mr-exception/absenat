@@ -4,7 +4,7 @@
 @section('content')
 <div class="row" style="text-align: left;">
     <div class="col-md-12">
-        <a class="btn btn-primary" style="margin-left: 0px;" href="#new-project">پروژه جدید</a>
+        <a class="btn btn-primary" style="margin-left: 0px;" href="{{route('projects.create')}}">پروژه جدید</a>
     </div>
 </div>
 @if(sizeof(Auth::user()->projects) >0)

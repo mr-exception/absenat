@@ -16,5 +16,11 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware('auth')->group(function(){
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::prefix('projects')->name('projects.')->group(function(){
+        Route::get('/create', 'Projects@create')->name('create');
+        Route::post('/store', 'Projects@store')->name('store');
+        Route::get('/{project}', 'Projects@show')->name('show');
+    });
+});
