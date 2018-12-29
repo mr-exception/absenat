@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Projects;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Auth;
 
 class Edit extends FormRequest{
     /**
@@ -21,10 +22,9 @@ class Edit extends FormRequest{
      */
     public function rules(){
         return [
-            'title'         => 'nullable|string|max:45',
-            'description'   => 'nullable|string|max:200',
-            'level_id'      => 'nullable|numeric|exists:project_templates',
-            'visibility'    => 'nullable|numeric|int:1,2',
+            'title'         => 'required|string|max:45',
+            'description'   => 'required|string|max:200',
+            'visibility'    => 'required|numeric|int:1,2',
         ];
     }
 }

@@ -10,6 +10,7 @@ use App\Models\Project;
 use App\Models\Member;
 
 use App\Http\Requests\Projects\Create as CreateProjectRequest;
+use App\Http\Requests\Projects\Edit as EditProjectRequest;
 
 class Projects extends Controller{
     public function create(Request $request){
@@ -62,6 +63,14 @@ class Projects extends Controller{
 
     public function close(Request $request, Project $project){
         $project->status = Project::CLOSED;
+        $project->save();
+        return redirect()->back();
+    }
+
+    public function open(Request $request, Project $project){
+        $project->status = Project::OPEN;
+        $project->save();
+        return redirect()->back();
     }
 
     public function removeMember(Request $request, Member $member){

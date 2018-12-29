@@ -3,6 +3,7 @@
 @section('content')
 @php
     use App\Models\Member;
+    use App\Models\Project;
 @endphp
 <div class="row">
     @if(session('cant_remove_self', false))
@@ -28,6 +29,75 @@
                 <div class="row">
                     <div class="col">
                         {{$project->description}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" style="text-align: left;">
+                        <a class="btn btn-info" href="{{route('projects.edit', ['project' => $project])}}">ویرایش</a>
+                        @if($project->status == Project::OPEN)
+                            <a class="btn btn-default" data-toggle="modal" data-target="#closeProject">خاتمه</a>
+                            <div class="modal fade" id="closeProject" tabindex="-1" role="dialog" aria-labelledby="closeProjectLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h5 class="modal-title" id="closeProjectLabel">خاتمه پروژه</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            با خاتمه پروژه دیگه نمی توان فاز جدیدی به آن اضافه کرد. اعضای پروژه نمی تواننید وظایف خود را ثبت کنند. با خاتمه پروژه در آینده می توانید دوباره آنرا به آغاز کرده و به حالت قبلی برگردانید. آیا مطمئن هستید که می خواهید پروژه را خاتمه دهید؟
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">خیر! منصرف شدم</button>
+                                            <a class="btn btn-primary" href="{{route('projects.close', ['project' => $project])}}">بله!</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if($project->status == Project::CLOSED)
+                            <a class="btn btn-default" data-toggle="modal" data-target="#openProject">شروع دوباره</a>
+                            <div class="modal fade" id="openProject" tabindex="-1" role="dialog" aria-labelledby="openProjectLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h5 class="modal-title" id="openProjectLabel">شروع پروژه</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            با شروع پروژه دوباره می توانید فازهای جدید و اسپرینت های دیگر به آن اضافه کنید. اعضای پروژه می توانند وظایف خود را در آن ثبت کنند. آیا مطمئن هستید که می خواهید پروژه را دوباره شروع کنید؟
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">خیر! منصرف شدم</button>
+                                            <a class="btn btn-primary" href="{{route('projects.open', ['project' => $project])}}">بله!</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        <a class="btn btn-danger" data-toggle="modal" data-target="#destroyProject">حذف</a>
+                        <div class="modal fade" id="destroyProject" tabindex="-1" role="dialog" aria-labelledby="destroyProjectLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h5 class="modal-title" id="destroyProjectLabel">حذف پروژه</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        با حذف پروژه تمام اطلاعات آن حذف می شوند. دیگر نمی توان اطلاعات پروژه را نیز برگرداند. آیا مطمئن هستید که می خواهید پروژه را حذف کنید؟
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">خیر! منصرف شدم</button>
+                                        <a class="btn btn-primary" href="{{route('projects.destroy', ['project' => $project])}}">بله!</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

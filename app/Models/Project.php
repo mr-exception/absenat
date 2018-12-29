@@ -21,6 +21,9 @@ class Project extends Model{
     public function members_pivot(){
         return $this->hasMany('App\Models\Member', 'project_id');
     }
+    public function getMembersCountAttribute(){
+        return $this->members()->count();
+    }
     public function epics(){
         return $this->hasMany('App\Models\Epic', 'project_id');
     }
