@@ -22,5 +22,8 @@ Route::middleware('auth')->group(function(){
         Route::get('/create', 'Projects@create')->name('create');
         Route::post('/store', 'Projects@store')->name('store');
         Route::get('/{project}', 'Projects@show')->name('show');
+
+        Route::get('/remove-permisison/{member}', 'Projects@removeMember')->name('permission.remove');
+        Route::get('/change-permisison/{member}', 'Projects@changeMemberPermission')->name('permission.change');
     });
 });

@@ -1,7 +1,24 @@
 @extends('layouts.app')
 @section('title', $project->title)
 @section('content')
+@php
+    use App\Models\Member;
+@endphp
 <div class="row">
+    @if(session('cant_remove_self', false))
+        <div class="col-md-12">
+            <div class="alert alert-danger" role="alert">
+                شما نمی توانید دسترسی خود را از پروژه حذف کنید. شما صاحب پروژه هستید.
+            </div>
+        </div>
+    @endif
+    @if(session('cant_change_self', false))
+        <div class="col-md-12">
+            <div class="alert alert-danger" role="alert">
+                شما نمی توانید دسترسی خود از پروژه را عوض کنید. شما صاحب پروژه هستید.
+            </div>
+        </div>
+    @endif
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
@@ -57,10 +74,25 @@
                                                         <th scope="row">{{$index+1}}</th>
                                                         <td>{{$member->user->username}}</td>
                                                         <td>{{$member->user->email}}</td>
-                                                        <td>{{$member->permission_str}}</td>
+                                                        <td>
+                                                            <form action="{{route('projects.permission.change', ['member' => $member])}}" id="permission-change-{{$member->id}}">
+                                                                <select class="browser-default custom-select" name="permission" style="margin-top: -0.3rem">
+                                                                    @foreach(__('general.permissions') as $code=>$label)
+                                                                        <option value="{{$code}}" {{$code == $member->permission? 'selected': ''}}>{{$label}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </form>
+                                                            <script>
+                                                                $(document).ready(function(){
+                                                                    $('#permission-change-{{$member->id}}').change(function(){
+                                                                        $('#permission-change-{{$member->id}}').submit();
+                                                                    });
+                                                                });
+                                                            </script>
+                                                        </td>
                                                         <td>{{$member->created_at_str}}</td>
                                                         <td>
-                                                            <a href="#remove"><span class="badge badge-danger">حذف</span></a>
+                                                            <a href="{{route('projects.permission.remove', ['member' => $member])}}"><span class="badge badge-danger">حذف</span></a>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -102,7 +134,7 @@
                                                         <td>{{$epic->title}}</td>
                                                         <td>{{$epic->title}}</td>
                                                         <td>
-                                                            <a href="#remove"><span class="badge badge-danger">حذف</span></a>
+                                                            <a href="{{route('projects.permission.remove')}}"><span class="badge badge-danger">حذف</span></a>
                                                         </td>
                                                     </tr>
                                                 @endforeach

@@ -52,7 +52,7 @@ class Projects extends Controller{
             'visibility',
             'status',
         ]))->save();
-        return redirect()->route('projects.edit', ['project'    => $project])->with(['edit_was_successfull' => true]);
+        return redirect()->route('projects.edit', ['project' => $project])->with(['edit_was_successfull' => true]);
     }
 
     public function destroy(Request $request, Project $project){
@@ -62,5 +62,21 @@ class Projects extends Controller{
 
     public function close(Request $request, Project $project){
         $project->status = Project::CLOSED;
+    }
+
+    public function removeMember(Request $request, Member $member){
+        $project = $member->project;
+        if(Auth::user()->id == $member->user_id && $member->permission == Member::OWNER)
+            return redirect()->route('projects.show', ['project' => $project])->with(['cant_remove_self' => true]);
+        $member->delete();
+        return redirect()->route('projects.show', ['project' => $project]);
+    }
+
+    public function changeMemberPermission(Request $request, Member $member){
+        $permission = $request->permission;
+        if(Auth::user()->id == $member->user_id && $member->permission == Member::OWNER)
+            return redirect()->route('projects.show', ['project' => $member->project])->with(['cant_change_self' => true]);
+        $member->permission = $permission;
+        return redirect()->route('projects.show', ['project' => $member->project]);
     }
 }
