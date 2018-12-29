@@ -2,30 +2,26 @@
 @section('title', $project->title)
 @section('content')
 <div class="row">
+    @if(session('edit_was_successfull', false))
+        <div class="col-md-12">
+            <div class="alert alert-success" role="alert">
+                ویرایش پروژه با موفقیت انجام شد!
+            </div>
+        </div>
+    @endif
+    @foreach($errors->all() as $error)
+        <div class="col-md-12">
+            <div class="alert alert-danger" role="alert">
+            خطا! {{$error}}
+            </div>
+        </div>
+    @endforeach
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 {{$project->title}}
             </div>
             <div class="card-body">
-                @if(session('edit_was_successfull', false))
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-success" role="alert">
-                                ویرایش پروژه با موفقیت انجام شد!
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                @foreach($errors->all() as $error)
-                    <div class="row">
-                        <div class="col">
-                            <div class="alert alert-danger" role="alert">
-                            خطا! {{$error}}
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
                 <form action="{{route('projects.update', ['project' => $project])}}" method="POST" class="text-center p-5">
                     @csrf
                     <div class="form-row mb-4" style="text-align: right;">

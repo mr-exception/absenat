@@ -215,7 +215,7 @@
                             <div class="tab-pane fade" id="epics" role="tabpanel" aria-labelledby="epics-tab">
                                 <div class="row">
                                     <div class="col">
-                                        <a class="btn btn-primary" href="#new-epic">فاز جدید</a>
+                                        <a class="btn btn-primary" href="{{route('epics.create', ['project' => $project])}}">فاز جدید</a>
                                     </div>
                                 </div>
                                 @if(sizeof($project->epics)>0)
@@ -225,8 +225,7 @@
                                             <tr>
                                                 <th scope="col">#</th>
                                                 <th scope="col">عنوان</th>
-                                                <th scope="col">شروع</th>
-                                                <th scope="col">پایان</th>
+                                                <th scope="col">بازه زمانی</th>
                                                 <th scope="col">تعداد اسپرینت‌ها</th>
                                                 <th scope="col">درصد عملیاتی شده</th>
                                                 <th scope="col">عملیات</th>
@@ -237,13 +236,30 @@
                                                     <tr>
                                                         <th scope="row">{{$index+1}}</th>
                                                         <td>{{$epic->title}}</td>
-                                                        <td>{{$epic->title}}</td>
-                                                        <td>{{$epic->title}}</td>
-                                                        <td>{{$epic->title}}</td>
-                                                        <td>{{$epic->title}}</td>
-                                                        <td>{{$epic->title}}</td>
+                                                        <td>{{$epic->time_period}}</td>
+                                                        <td>{{$epic->sprints_count}} عدد</td>
+                                                        <td>{{$epic->progress_percentage}}</td>
                                                         <td>
-                                                            <a href="{{route('projects.permission.remove')}}"><span class="badge badge-danger">حذف</span></a>
+                                                            <a data-toggle="modal" data-target="#destroyEpic"><span class="badge badge-danger">حذف</span></a>
+                                                            <div class="modal fade" id="destroyEpic" tabindex="-1" role="dialog" aria-labelledby="destroyEpicLabel" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                            <h5 class="modal-title" id="destroyEpicLabel">حذف فاز از پروژه</h5>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            با حذف این فاز از پروژه تمام اطلاعات آن نیز حذف می شود. در نتیجه دیگر قابل بازیابی نیستند. آیا مطمئن هستید که می خواهید این فاز را حذف کنید؟
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">خیر! منصرف شدم</button>
+                                                                            <a class="btn btn-primary" href="{{route('epics.destroy', ['epic' => $epic])}}">بله!</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 @endforeach
