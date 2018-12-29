@@ -39,7 +39,7 @@ return [
     'dimensions'           => ':attribute اندازه غیرمعتبر دارد',
     'distinct'             => ':attribute تکراری می باشد',
     'email'                => ':attribute نامعتبر است',
-    'exists'               => ':attribute انتخاب شده نامعتبر است',
+    'exists'               => ':attribute انتخاب شده موجود نمی باشد.',
     'file'                 => ':attribute فایل باید باشد',
     'filled'               => ':attribute باید مقدار داشته باشد',
     'image'                => ':attribute باید تصویر باشد',
@@ -122,6 +122,9 @@ return [
         'description'   => 'توضیحات',
         'level_id'      => 'سطح پروژه',
         'visibility'    => 'نوع پروژه',
+        'project_id'    => 'پروژه',
+        'permission'    => 'گروه کاربری',
+        'email'         => 'آدرس ایمیل',
     ],
 
 ];

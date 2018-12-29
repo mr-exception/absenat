@@ -20,6 +20,20 @@
             </div>
         </div>
     @endif
+    @if(session('member_updated', false))
+        <div class="col-md-12">
+            <div class="alert alert-success" role="alert">
+                سطح دسترسی {{session('username', '')}} بروزرسانی شد
+            </div>
+        </div>
+    @endif
+    @if(session('member_added', false))
+        <div class="col-md-12">
+            <div class="alert alert-success" role="alert">
+            {{session('username', '')}} به پروژه اضافه شد.
+            </div>
+        </div>
+    @endif
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
@@ -122,7 +136,7 @@
                             <div class="tab-pane fade show active" id="members" role="tabpanel" aria-labelledby="members-tab">
                                 <div class="row">
                                     <div class="col">
-                                        <a class="btn btn-primary" href="#new-member">عضو جدید</a>
+                                        <a class="btn btn-primary" href="{{route('members.create', ['project' => $project])}}">عضو جدید</a>
                                     </div>
                                 </div>
                                 @if(sizeof($project->members)>0)
@@ -145,24 +159,49 @@
                                                         <td>{{$member->user->username}}</td>
                                                         <td>{{$member->user->email}}</td>
                                                         <td>
-                                                            <form action="{{route('projects.permission.change', ['member' => $member])}}" id="permission-change-{{$member->id}}">
-                                                                <select class="browser-default custom-select" name="permission" style="margin-top: -0.3rem">
-                                                                    @foreach(__('general.permissions') as $code=>$label)
-                                                                        <option value="{{$code}}" {{$code == $member->permission? 'selected': ''}}>{{$label}}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </form>
-                                                            <script>
-                                                                $(document).ready(function(){
-                                                                    $('#permission-change-{{$member->id}}').change(function(){
-                                                                        $('#permission-change-{{$member->id}}').submit();
+                                                            @if($project->owner_id == $member->user_id)
+                                                                {{$member->permission_str}}
+                                                            @else
+                                                                <form action="{{route('members.change', ['member' => $member])}}" id="permission-change-{{$member->id}}">
+                                                                    <select class="browser-default custom-select" name="permission" style="margin-top: -0.3rem">
+                                                                        @foreach(__('general.permissions') as $code=>$label)
+                                                                            <option value="{{$code}}" {{$code == $member->permission? 'selected': ''}}>{{$label}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </form>
+                                                                <script>
+                                                                    $(document).ready(function(){
+                                                                        $('#permission-change-{{$member->id}}').change(function(){
+                                                                            $('#permission-change-{{$member->id}}').submit();
+                                                                        });
                                                                     });
-                                                                });
-                                                            </script>
+                                                                </script>
+                                                            @endif
                                                         </td>
                                                         <td>{{$member->created_at_str}}</td>
                                                         <td>
-                                                            <a href="{{route('projects.permission.remove', ['member' => $member])}}"><span class="badge badge-danger">حذف</span></a>
+                                                            @if($project->owner_id != $member->user_id)
+                                                                <a data-toggle="modal" data-target="#destroyMember"><span class="badge badge-danger">حذف</span></a>
+                                                                <div class="modal fade" id="destroyMember" tabindex="-1" role="dialog" aria-labelledby="destroyMemberLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                                <h5 class="modal-title" id="destroyMemberLabel">حذف عضو از پروژه</h5>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                با حذف عضوی از پروژه، دسترسی او به اطلاعات پروژه از بین می رود. اما تمام تسک ها و اطلاعات او در پروژه باقی می ماند. با افزوده شدن دوباره او به پروژه می تواند کار خود را ادامه دهد. آیا از حذف {{$member->user->username}} از پروژه اطمینان دارید؟
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">خیر! منصرف شدم</button>
+                                                                                <a class="btn btn-primary" href="{{route('members.destroy', ['member' => $member])}}">بله!</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                 @endforeach

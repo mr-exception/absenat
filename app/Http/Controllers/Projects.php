@@ -72,20 +72,4 @@ class Projects extends Controller{
         $project->save();
         return redirect()->back();
     }
-
-    public function removeMember(Request $request, Member $member){
-        $project = $member->project;
-        if(Auth::user()->id == $member->user_id && $member->permission == Member::OWNER)
-            return redirect()->route('projects.show', ['project' => $project])->with(['cant_remove_self' => true]);
-        $member->delete();
-        return redirect()->route('projects.show', ['project' => $project]);
-    }
-
-    public function changeMemberPermission(Request $request, Member $member){
-        $permission = $request->permission;
-        if(Auth::user()->id == $member->user_id && $member->permission == Member::OWNER)
-            return redirect()->route('projects.show', ['project' => $member->project])->with(['cant_change_self' => true]);
-        $member->permission = $permission;
-        return redirect()->route('projects.show', ['project' => $member->project]);
-    }
 }

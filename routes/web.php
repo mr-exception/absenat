@@ -32,7 +32,12 @@ Route::middleware('auth')->group(function(){
         Route::get('/{project}/close', 'Projects@close')->name('close');
         Route::get('/{project}/open', 'Projects@open')->name('open');
 
-        Route::get('/remove-permisison/{member}', 'Projects@removeMember')->name('permission.remove');
-        Route::get('/change-permisison/{member}', 'Projects@changeMemberPermission')->name('permission.change');
+    });
+    Route::prefix('members')->name('members.')->group(function(){
+        Route::get('/create/{project}', 'Members@create')->name('create');
+        Route::post('/store', 'Members@store')->name('store');
+        
+        Route::get('/destroy/{member}', 'Members@destroy')->name('destroy');
+        Route::get('/change/{member}', 'Members@change')->name('change');
     });
 });
