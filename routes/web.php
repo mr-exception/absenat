@@ -53,7 +53,7 @@ Route::middleware('auth')->group(function(){
         Route::get('/{epic}/finish', 'Epics@finish')->name('finish');
     });
     Route::prefix('sprints')->name('sprints.')->group(function(){
-        Route::get('/create/{project}', 'Sprints@create')->name('create');
+        Route::get('/create/{epic}', 'Sprints@create')->name('create');
         Route::post('/store', 'Sprints@store')->name('store');
 
         Route::get('/edit/{sprint}', 'Sprints@edit')->name('edit');
@@ -61,5 +61,7 @@ Route::middleware('auth')->group(function(){
 
         Route::get('/destroy/{sprint}', 'Sprints@destroy')->name('destroy');
         Route::get('/{sprint}', 'Sprints@show')->name('show');
+        Route::get('/{sprint}/start', 'Sprints@start')->name('start');
+        Route::get('/{sprint}/finish', 'Sprints@finish')->name('finish');
     });
 });

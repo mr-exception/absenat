@@ -240,6 +240,7 @@
                                                         <td>{{$epic->sprints_count}} عدد</td>
                                                         <td>{{$epic->progress_percentage}}</td>
                                                         <td>
+                                                            <a href="{{route('epics.show', ['epic' => $epic])}}"><span class="badge badge-default">مشاهده</span></a>
                                                             <a data-toggle="modal" data-target="#destroyEpic"><span class="badge badge-danger">حذف</span></a>
                                                             <div class="modal fade" id="destroyEpic" tabindex="-1" role="dialog" aria-labelledby="destroyEpicLabel" aria-hidden="true">
                                                                 <div class="modal-dialog" role="document">

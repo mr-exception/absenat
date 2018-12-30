@@ -19,6 +19,8 @@ class CreateUserStoriesTable extends Migration
             $table->string('description', 200);
             $table->integer('sprint_id')->index();
             $table->smallInteger('status')->default(1);
+            $table->smallInteger('points');
+            $table->smallInteger('poritory')->default(1);
             $table->timestamps();
         });
     }

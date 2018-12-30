@@ -15,7 +15,7 @@ class Epic extends Model{
     const INPROGRESS    = 2;
     const FINISHED      = 3;
     public function getStatusStrAttribute(){
-        return __('geneneral.epics.status_str.' . $this->status);
+        return __('general.epics.status_str.' . $this->status);
     }
     public function project(){
         return $this->belongsTo('App\Models\Project', 'project_id');

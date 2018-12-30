@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'فاز جدید')
+@section('title', 'اسپرینت جدید')
 @section('content')
 @php
     use App\Drivers\Time;
@@ -15,12 +15,12 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                فاز جدید
+                اسپرینت جدید
             </div>
             <div class="card-body">
-                <form action="{{route('epics.store')}}" method="POST" class="text-center p-5">
+                <form action="{{route('sprints.store')}}" method="POST" class="text-center p-5">
                     @csrf
-                    <input name="project_id" value="{{$project->id}}" hidden />
+                    <input name="epic_id" value="{{$epic->id}}" hidden />
                     <div class="form-row mb-4" style="text-align: right;">
                         <div class="col">
                             <label>عنوان:</label>
@@ -30,7 +30,7 @@
                     <div class="form-row mb-4" style="text-align: right;">
                         <div class="col">
                             <div class="form-group">
-                                <label for="description">توضیحات فاز:</label>
+                                <label for="description">توضیحات اسپرینت:</label>
                                 <textarea class="form-control rounded-0" id="description" name="description" rows="3">{{old('description', '')}}</textarea>
                             </div>
                         </div>
@@ -97,7 +97,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-info my-4" type="submit">ثبت فاز</button>
+                    <button class="btn btn-info my-4" type="submit">ثبت اسپرینت</button>
                 </form>
             </div>
         </div>

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', $epic->title)
+@section('title', $sprint->title)
 @section('content')
 @php
     use App\Models\Epic;
@@ -8,22 +8,22 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                {{$epic->title}} - <a href="{{route('projects.show', ['project' => $epic->project])}}">{{$epic->project->title}}</a>
+                {{$sprint->title}} - <a href="{{route('epics.show', ['epic' => $sprint->epic])}}">{{$sprint->epic->title}}</a>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        {{$epic->description}} ({{$epic->time_period}})
+                        {{$sprint->description}} ({{$sprint->time_period}})
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12" style="text-align: left;">
-                        <a class="btn btn-info" href="{{route('epics.edit', ['epic' => $epic])}}">ویرایش</a>
-                        @if($epic->status == Epic::PENDING || $epic->status == Epic::FINISHED)
-                            @if($epic->status == Epic::PENDING)
+                        <a class="btn btn-info" href="{{route('sprints.edit', ['sprint' => $sprint])}}">ویرایش</a>
+                        @if($sprint->status == Epic::PENDING || $sprint->status == Epic::FINISHED)
+                            @if($sprint->status == Epic::PENDING)
                                 <a class="btn btn-default" data-toggle="modal" data-target="#startEpic">شروع</a>
                             @endif
-                            @if($epic->status == Epic::FINISHED)
+                            @if($sprint->status == Epic::FINISHED)
                                 <a class="btn btn-default" data-toggle="modal" data-target="#startEpic">شروع دوباره</a>
                             @endif
                             <div class="modal fade" id="startEpic" tabindex="-1" role="dialog" aria-labelledby="startEpicLabel" aria-hidden="true">
@@ -40,13 +40,13 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">خیر! منصرف شدم</button>
-                                            <a class="btn btn-primary" href="{{route('epics.start', ['epic' => $epic])}}">بله!</a>
+                                            <a class="btn btn-primary" href="{{route('sprints.start', ['sprint' => $sprint])}}">بله!</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         @endif
-                        @if($epic->status == Epic::INPROGRESS)
+                        @if($sprint->status == Epic::INPROGRESS)
                             <a class="btn btn-default" data-toggle="modal" data-target="#finishEpic">پایان فاز</a>
                             <div class="modal fade" id="finishEpic" tabindex="-1" role="dialog" aria-labelledby="finishEpicLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -62,7 +62,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">خیر! منصرف شدم</button>
-                                            <a class="btn btn-primary" href="{{route('epics.finish', ['epic' => $epic])}}">بله!</a>
+                                            <a class="btn btn-primary" href="{{route('sprints.finish', ['sprint' => $sprint])}}">بله!</a>
                                         </div>
                                     </div>
                                 </div>
@@ -83,7 +83,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">خیر! منصرف شدم</button>
-                                        <a class="btn btn-primary" href="{{route('epics.destroy', ['epic' => $epic])}}">بله!</a>
+                                        <a class="btn btn-primary" href="{{route('sprints.destroy', ['sprint' => $sprint])}}">بله!</a>
                                     </div>
                                 </div>
                             </div>
@@ -102,60 +102,40 @@
                     <div class="col">
                         <div class="row">
                             <div class="col">
-                                <a class="btn btn-primary" href="{{route('sprints.create', ['epic' => $epic])}}">اسپرینت جدید</a>
+                                <a class="btn btn-primary" href="{{route('sprints.create', ['sprint' => $sprint])}}">مسئله جدید (user story)</a>
                             </div>
                         </div>
-                        @if(sizeof($epic->sprints)>0)
+                        @if(sizeof($sprint->user_stories)>0)
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">عنوان</th>
-                                        <th scope="col">تعداد مسائل (user story)</th>
-                                        <th scope="col">بازه زمانی</th>
+                                        <th scope="col">تعداد تسک ها</th>
+                                        <th scope="col">درجه سختی</th>
+                                        <th scope="col">اولویت</th>
                                         <th scope="col">وضعیت</th>
                                         <th scope="col">عملیات</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($epic->sprints as $index=>$sprint)
+                                        @foreach($sprint->user_stories as $index=>$user_story)
                                             <tr>
                                                 <th scope="row">{{$index+1}}</th>
-                                                <td>{{$sprint->title}}</td>
-                                                <td>{{$sprint->user_stories_count}}</td>
-                                                <td>{{$sprint->time_period}}</td>
-                                                <td>{{$sprint->status_str}}</td>
-                                                <td>
-                                                    <a href="{{route('sprints.show', ['sprint' => $sprint])}}"><span class="badge badge-default">مشاهده</span></a>
-                                                    <a data-toggle="modal" data-target="#destroySprint"><span class="badge badge-danger">حذف</span></a>
-                                                    <div class="modal fade" id="destroySprint" tabindex="-1" role="dialog" aria-labelledby="destroySprintLabel" aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                    <h5 class="modal-title" id="destroySprintLabel">حذف اسپرینت</h5>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    با حذف اسپرینت از پروژه، تمام اطلاعات آن نیز حذف می شود و دیگر نمی توان آنها را بازیابی کرد. آیا از حذف این اسپرینت مطمئن هستید؟
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">خیر! منصرف شدم</button>
-                                                                    <a class="btn btn-primary" href="{{route('sprints.destroy', ['sprint' => $sprint])}}">بله!</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
+                                                <td>{{$user_story->title}}</td>
+                                                <td>{{$user_story->tasks_count}}</td>
+                                                <td>{{$user_story->points}}</td>
+                                                <td>{{$user_story->poritory}}</td>
+                                                <td>{{$user_story->status_str}}</td>
+                                                <td>-</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
                         @else
-                            <div class="row"><div class="col" style="text-align: center;">هیچ اسپرینتی در این فاز وجود ندارد</div></div>
+                            <div class="row"><div class="col" style="text-align: center;">هیچ مسئله ای در این فاز وجود ندارد</div></div>
                         @endif
                     </div>
                 </div>
