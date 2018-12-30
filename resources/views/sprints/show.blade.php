@@ -33,10 +33,10 @@
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
-                                            <h5 class="modal-title" id="startEpicLabel">شروع فاز</h5>
+                                            <h5 class="modal-title" id="startEpicLabel">شروع اسپرینت</h5>
                                         </div>
                                         <div class="modal-body">
-                                            با شروع شدن فاز می توان اسپرینت های آنرا تعریف کرد و اعضا وظایف خود را مدیریت کنند. آیا مطمئن هستید که می خواهید این فاز را شروع کنید؟
+                                            با شروع اسپرینت کاربران می توانند وظایف خود را در آن ثبت کنند. آیا از شروع اسپرینت مطمئن هستید؟
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">خیر! منصرف شدم</button>
@@ -47,7 +47,7 @@
                             </div>
                         @endif
                         @if($sprint->status == Epic::INPROGRESS)
-                            <a class="btn btn-default" data-toggle="modal" data-target="#finishEpic">پایان فاز</a>
+                            <a class="btn btn-default" data-toggle="modal" data-target="#finishEpic">پایان اسپرینت</a>
                             <div class="modal fade" id="finishEpic" tabindex="-1" role="dialog" aria-labelledby="finishEpicLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -55,10 +55,10 @@
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
-                                            <h5 class="modal-title" id="finishEpicLabel">پایان فاز</h5>
+                                            <h5 class="modal-title" id="finishEpicLabel">پایان اسپرینت</h5>
                                         </div>
                                         <div class="modal-body">
-                                            با پایان دادن به فاز دیگر نمی توان اسپرینتی در آن تعریف کرد. البته می توانید بعدا این فاز را دوباره شروع کنید. آیا مطمئن هستید که می خواید این فاز را خاتمه دهید؟
+                                            با پایان یافتن اسپرینت دیگر نمی توان مسئله و تسکی به آن افزود و تمام عملیات در آن متوقف می شود. البته شما می توانید در آینده دوباره اسپرینت را از نو شروع کنید. آیا از پایان دادن این اسپرینت مطمئن هستید؟
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">خیر! منصرف شدم</button>
@@ -68,18 +68,18 @@
                                 </div>
                             </div>
                         @endif
-                        <a class="btn btn-danger" data-toggle="modal" data-target="#destroyEpic">حذف</a>
-                        <div class="modal fade" id="destroyEpic" tabindex="-1" role="dialog" aria-labelledby="destroyEpicLabel" aria-hidden="true">
+                        <a class="btn btn-danger" data-toggle="modal" data-target="#destroySprint">حذف</a>
+                        <div class="modal fade" id="destroySprint" tabindex="-1" role="dialog" aria-labelledby="destroySprintLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
-                                        <h5 class="modal-title" id="destroyEpicLabel">حذف فاز</h5>
+                                        <h5 class="modal-title" id="destroySprintLabel">حذف اسپرینت</h5>
                                     </div>
                                     <div class="modal-body">
-                                        با حذف شدن فاز دیگر به اطلاعات داخل آن دسترسی نخواهید داشت و قابل بازگردانی هم نخواهند بود. آیا از حذف این فاز مطمئن هستید؟
+                                        با حذف اسپرینت از پروژه، تمام اطلاعات آن نیز حذف می شود و دیگر نمی توان آنها را بازیابی کرد. آیا از حذف این اسپرینت مطمئن هستید؟
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">خیر! منصرف شدم</button>
