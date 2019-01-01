@@ -3,23 +3,17 @@
     src: url(../fonts/Shabnam.ttf); 
 }
 *{
-    font-family: "Shabnam";
+    font-family: "Shabnam" !important;
 }
-.row {
+
+/*
+    inline classes for girds
+*/
+
+.top-space {
+    margin-top: 60px;
+}
+.form-group, .form-control {
+    text-align: right;
     direction: rtl;
-    text-align: right;
-    margin-top: 10px;
-}
-.card-header {
-    direction: rtl;
-    text-align: right;
-}
-.form-check {
-    text-align: right;
-}
-.form-check-label {
-    margin-right: 25px;
-}
-.modal-content {
-    text-align: justify;
 }
